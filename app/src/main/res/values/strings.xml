@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyNFCEmulatorApp</string>
+    <string name="serv_desc">Egyedi beléptető azonosító emulálása</string>
+    <string name="aid_desc">Saját fejlesztésű biztonsági protokoll</string>
+</resources>
