@@ -1,5 +1,6 @@
 <host-apdu-service xmlns:android="http://schemas.android.com/apk/res/android"
     android:description="@string/serv_desc"
+    android:apduServiceBanner="@drawable/ic_android_black_24dp"
     android:requireDeviceUnlock="false">
     <aid-group android:category="payment"
         android:description="@string/aid_desc">
