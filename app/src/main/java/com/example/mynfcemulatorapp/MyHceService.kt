@@ -20,7 +20,7 @@ class MyHceService : HostApduService() {
         return if (hexCommand.startsWith("00A40400") && !cardId!!.isEmpty()) {
             println("Olvasó csatlakozva, azonosító küldése...")
 
-            // Válasz: Siker (9000) + az egyedi adatod (például: 123456)
+            // Válasz: Siker (9000) + az egyedi adatod (például: 12345678)
             // Formátum: [Adat] + [Státusz szavak: 90 00]
             hexStringToByteArray(cardId + "9000")
         } else {
