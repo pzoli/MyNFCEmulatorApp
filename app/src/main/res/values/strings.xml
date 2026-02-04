@@ -2,4 +2,11 @@
     <string name="app_name">MyNFCEmulatorApp</string>
     <string name="serv_desc">Egyedi beléptető azonosító emulálása</string>
     <string name="aid_desc">Saját fejlesztésű biztonsági protokoll</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="card_header">Card settings</string>
+
+    <!-- Messages Preferences -->
+    <string name="cardid_title">CardID</string>
 </resources>

@@ -1,7 +1,10 @@
 package com.example.mynfcemulatorapp
 
+import android.content.SharedPreferences
 import android.nfc.cardemulation.HostApduService
 import android.os.Bundle
+import androidx.preference.PreferenceManager
+
 
 class MyHceService : HostApduService() {
 
@@ -9,14 +12,17 @@ class MyHceService : HostApduService() {
         if (commandApdu == null) return hexStringToByteArray("6F00") // Hiba kód
 
         val hexCommand = commandApdu.joinToString("") { "%02X".format(it) }
+        val sharedPreferences: SharedPreferences? =
+            PreferenceManager.getDefaultSharedPreferences(this)
+        val cardId = sharedPreferences!!.getString("cardid", "")
 
         // Ha az olvasó a "SELECT AID" parancsot küldi
-        return if (hexCommand.startsWith("00A40400")) {
+        return if (hexCommand.startsWith("00A40400") && !cardId!!.isEmpty()) {
             println("Olvasó csatlakozva, azonosító küldése...")
 
             // Válasz: Siker (9000) + az egyedi adatod (például: 123456)
             // Formátum: [Adat] + [Státusz szavak: 90 00]
-            hexStringToByteArray("123456789000")
+            hexStringToByteArray(cardId + "9000")
         } else {
             hexStringToByteArray("6F00") // Ismeretlen parancs
         }

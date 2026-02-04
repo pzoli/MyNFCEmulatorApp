@@ -1,18 +1,28 @@
 package com.example.mynfcemulatorapp;
 
-import android.content.ComponentName;
-import android.nfc.NfcAdapter;
-import android.nfc.cardemulation.CardEmulation;
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    private final ActivityResultLauncher<Intent> activitySettingsLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    // Itt kezelheted az eredményt
+                    Intent data = result.getData();
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,38 +34,10 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        findViewById(R.id.button).setOnClickListener(
+                v -> activitySettingsLauncher.launch(new Intent(this, SettingsActivity.class))
+        );
     }
 
-    /*
-    @Override
-    protected void onResume() {
-        super.onResume();
-        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        if (nfcAdapter != null && nfcAdapter.isEnabled()) {
-            try {
-                // Fontos: a csomagnévnek és az osztálynak pontosnak kell lennie
-                ComponentName componentName = new ComponentName(
-                        "com.example.mynfcemulatorapp",
-                        "com.example.mynfcemulatorapp.MyHceService"
-                );
-                CardEmulation cardEmulation = CardEmulation.getInstance(nfcAdapter);
-                cardEmulation.setPreferredService(this, componentName);
-                Log.d("HCE", "Szolgáltatás prioritás beállítva.");
-            } catch (Exception e) {
-                Log.e("HCE", "Hiba a prioritás beállításakor: " + e.getMessage());
-            }
-        }
-    }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        if (nfcAdapter != null) {
-            CardEmulation cardEmulation = CardEmulation.getInstance(nfcAdapter);
-            cardEmulation.unsetPreferredService(this);
-        }
-    }
-
-     */
 }
